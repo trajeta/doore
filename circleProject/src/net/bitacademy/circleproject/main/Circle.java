@@ -3,7 +3,7 @@ package net.bitacademy.circleproject.main;
 public class Circle {
 	private double radius;
 	private String color;
-	
+	private String aaa;
 	public Circle(){
 		this(1.0, "red");
 //		radius = r;
