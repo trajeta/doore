@@ -26,7 +26,7 @@ public class DispatcherServlet extends HttpServlet {
 	protected void processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
 			java.io.IOException {
-
+			System.out.println("test");
 		CommandResult commandResult;
 		
 		try {
