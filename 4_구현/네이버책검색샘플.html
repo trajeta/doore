@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xthml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3g.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title> 책 검색 </title>
+</head>
+<script type="text/javascript" src="../js/jquery-1.10.2.js"></script>
+<script> // ajax 스크립트
+var params = {"target":"book", "query":"","display":5}
+function callOpenAPI() {
+	params.query = $("#query").val();
+	var q = $.param(params);
+	var ajax_url = "../api/naver_proxy.jsp?" + q;
+	$.ajax({type: "get", url: ajax_url,
+		contentType: "text/xml;charset=UTF-8", dataType:"xml",
+		error:function(xhr, status, error) {alert("error:" + status);},
+		success: showResult}); //Ajax 호출 및 이벤트 핸들러 함수
+}
+function showResult(xml) {
+	var totalCount=$(xml).find("total").text();
+	$("#result").text(totalCount + "건 검색");
+	$(xml).find("rss").find("channel").find("item").each(function(idx) {
+		var title = $(this).find("title").text();
+		$("#result").append("<br />" + title);
+	});
+}
+</script>
+<body>
+<input type="text" id="query" />
+<input type="button" onclick="callOpenAPI()" value="bookAPI call" />
+<div id="result"></div>
+</body>
+</html>
